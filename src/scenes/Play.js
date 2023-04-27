@@ -5,6 +5,7 @@ class Play extends Phaser.Scene {
     preload() {
         // load images/tile sprites (params: key of name of graphic, & URL of asset)
         this.load.image('rocket', './assets/rocket.png');
+        this.load.image('smallerSpaceship', './assets/smallerSpaceship.png')
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
         // load spritesheet
@@ -28,11 +29,13 @@ class Play extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-          // add spaceships (x3)
+        // add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
-                // animation config
+        this.smallerShip = new Spaceship(this, game.config.width, borderUISize*6,'smallerSpaceship', 0, 50).setOrigin(0,0);
+        this.smallerShip.moveSpeed*=3;
+        // animation config
         this.anims.create({
             key: 'explode',
             frames: this.anims.generateFrameNumbers('explosion', { 
@@ -66,6 +69,7 @@ class Play extends Phaser.Scene {
 
         // 60-second play clock
         scoreConfig.fixedWidth = 0;
+        //ADD TIME TO GAME using game.settings.gameTimer when points increment
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← to Menu', scoreConfig).setOrigin(0.5);
@@ -74,22 +78,24 @@ class Play extends Phaser.Scene {
     }
     
     update() {
-        // check key input for restart
+        // if the game is over, check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
         }
-
+        // if the game is over, checks key input for menu scene
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
         }
-
+        //moves the starfield
         this.starfield.tilePositionX -= 4;  // update tile sprite
-
-        if(!this.gameOver) {
+        
+        //updates all the rockets
+        if(!this.gameOver){
             this.p1Rocket.update();             // update p1
-             this.ship01.update();               // update spaceship (x3)
+            this.ship01.update();               // update spaceship (x3)
             this.ship02.update();
             this.ship03.update();
+            this.smallerShip.update();
         }
 
         // check collisions
@@ -132,7 +138,9 @@ class Play extends Phaser.Scene {
         });
         // score add and repaint
         this.p1Score += ship.points;
-        this.scoreLeft.text = this.p1Score; 
+        this.scoreLeft.text = this.p1Score;
+
+        this.game.settings.gameTimer
         
         this.sound.play('sfx_explosion');
       }
