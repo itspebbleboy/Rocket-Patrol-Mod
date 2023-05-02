@@ -1,4 +1,5 @@
 /*
+
 Name: Tatiana Lucero
 Mod Name: Roocket Patroooool: The rookening
 time: 4hrs
@@ -16,6 +17,13 @@ time: 4hrs
 (15) Create a new enemy Spaceship type (w/ new artwork) that's smaller, moves faster, and is worth more points 
 (15) Implement a new timing/scoring mechanism that adds time to the clock for successful hits
 (15) Use Phaser's particle emitter to create a particle explosion when the rocket hits the spaceship
+
+
+
+///////////////// CITATIONS
+used this to realize frequency & lifespan where what i needed to make the particles work <3
+https://stackoverflow.com/questions/74493199/timed-particle-emitters-in-phaser-3
+
 */
 
 
