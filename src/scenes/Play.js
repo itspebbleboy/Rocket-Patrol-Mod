@@ -93,11 +93,11 @@ class Play extends Phaser.Scene {
         // 60-second play clock
         scoreConfig.fixedWidth = 0;
         //ADD TIME TO GAME using game.settings.gameTimer when points increment
-        this.GameOverCall(/*game.settings.gameTimer*/ 2000);
+        this.GameOverCall(game.settings.gameTimer);
         this.speedIncrease = this.time.delayedCall (30000, () => {
-            this.ship01.moveSpeed*=1.25; 
-            this.ship02.moveSpeed*=1.25; 
-            this.ship03.moveSpeed*=1.25; 
+            this.ship01.moveSpeed*=1.5; 
+            this.ship02.moveSpeed*=1.5; 
+            this.ship03.moveSpeed*=1.5; 
             this.smallerShip.moveSpeed*=1.15;
         }, null, this);
 
