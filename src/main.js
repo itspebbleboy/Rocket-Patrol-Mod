@@ -1,6 +1,6 @@
 /*
 Name: Tatiana Lucero
-Mod Name: Roocket Patroooool
+Mod Name: Roocket Patroooool: The rookening
 time: 4hrs
 
 ///////////////// 5-Point Tier
